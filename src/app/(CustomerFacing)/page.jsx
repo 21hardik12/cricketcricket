@@ -16,8 +16,6 @@ const getAllEvents = async () => {
   return events;
 }
 
-
-
 export default async function HomePage() {  
   const imagePaths = await getAllCarouselImages();
   return (

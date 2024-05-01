@@ -15,8 +15,8 @@ import { IoIosArrowDown } from "react-icons/io";
 export default function SeatGroup({
   groupedTickets,
 }) {
-  const [openGroup, setOpenGroup] = useState<number | null>(null);
-  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [openGroup, setOpenGroup] = useState(null);
+  const [selectedTicket, setSelectedTicket] = useState(null);
 
   const router = useRouter();
   const pathName = usePathname();
