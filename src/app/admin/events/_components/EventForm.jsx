@@ -4,11 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoryOptions } from "./CategoryOptions";
-import { FormEventHandler, useState } from "react";
 import { StadiumOptions } from "./StadiumOptions";
 import { addEvent, editEvent } from "@/app/admin/_actions/event";
 import { useFormState, useFormStatus } from "react-dom";
-import { Category, Event, Stadium } from "@prisma/client";
 import Image from "next/image";
 
 

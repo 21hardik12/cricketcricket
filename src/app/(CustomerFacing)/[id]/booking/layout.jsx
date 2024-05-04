@@ -1,4 +1,4 @@
-import Header from "@/app/(CustomerFacing)/_components/Header";
+import Header from "@/app/_CustomerFacing/_components/Header";
 
 export default function BookingLayout({
   children,

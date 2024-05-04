@@ -6,21 +6,21 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Event {
-  id                    String       @id @default(uuid())
+  id                    String       @id @default(auto()) @map("_id") @db.ObjectId
   title                 String
   description           String
-  categoryId            String
+  categoryId            String @db.ObjectId
   price                 Int
   date                  DateTime
   images                EventImage[]
-  stadiumId             String  
-  isAvailableForBooking Boolean    @default(false)
-  bookings              Booking[]  
+  stadiumId             String @db.ObjectId
+  isAvailableForBooking Boolean      @default(false)
+  bookings              Booking[]
   stadium               Stadium      @relation(fields: [stadiumId], references: [id], onDelete: Cascade)
   category              Category     @relation(fields: [categoryId], references: [id], onDelete: NoAction)
   createdAt             DateTime     @default(now())
@@ -28,20 +28,20 @@ model Event {
 }
 
 model Category {
-  id        String  @id @default(uuid())
-  name      String
-  events    Event[]  
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  events Event[]
 }
 
 model EventImage {
-  id      String @id @default(uuid())
-  url     String
-  eventId String
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  url     String @db.String
+  eventId String @db.ObjectId
   event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
 model Stadium {
-  id       String         @id @default(uuid())
+  id       String         @id @default(auto()) @map("_id") @db.ObjectId
   location String
   images   StadiumImage[]
   events   Event[]
@@ -49,30 +49,30 @@ model Stadium {
 }
 
 model Ticket {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   price     Int
-  stadiumId String
+  stadiumId String @db.ObjectId
   stadium   Stadium  @relation(fields: [stadiumId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt    
+  updatedAt DateTime @updatedAt
   Booking   Booking? @relation(fields: [bookingId], references: [id], onDelete: NoAction)
-  bookingId String?
+  bookingId String? @db.ObjectId
 }
 
 model StadiumImage {
-  id        String  @id @default(uuid())
-  url       String
-  stadiumId String
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  url       String @db.String
+  stadiumId String @db.ObjectId
   stadium   Stadium @relation(fields: [stadiumId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   email     String    @unique
   name      String
   phone     String
-  address   String
+  address   String 
   role      String
   bookings  Booking[]
   createdAt DateTime  @default(now())
@@ -80,11 +80,11 @@ model User {
 }
 
 model Booking {
-  id        String   @id @default(uuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   pricePaid Int
-  userId    String
-  eventId   String
-  tickets    Ticket[]
+  userId    String @db.ObjectId
+  eventId   String @db.ObjectId
+  tickets   Ticket[]
   status    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   event     Event    @relation(fields: [eventId], references: [id], onDelete: NoAction)

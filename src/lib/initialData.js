@@ -1,6 +1,11 @@
-import { url } from "inspector";
 
-const randomUUID = require("crypto").randomUUID;
+// const randomUUID = require("crypto").randomUUID;
+
+const crypto = require("crypto");
+// const id = crypto.randomBytes(16).toString("hex");
+const randomUUID = () => {
+  return crypto.randomBytes(12).toString("hex");
+}
 /*
 model Ticket {
   id        String   @id @default(uuid())
@@ -1128,4 +1133,4 @@ const stadiumImages = [
 ]
 
 
-export {stadiums, tickets, stadiumImages}
+module.exports = {stadiums, tickets, stadiumImages};

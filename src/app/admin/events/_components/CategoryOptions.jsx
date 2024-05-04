@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Category, Event } from "@prisma/client";
 
 
 export function CategoryOptions({

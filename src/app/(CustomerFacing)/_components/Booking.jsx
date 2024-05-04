@@ -6,11 +6,11 @@ import {
 } from "@/components/ui/collapsible";
 import { IoIosArrowDown } from "react-icons/io";
 import Image from "next/image";
-import { Stadium } from "@prisma/client";
 import SeatGroup from "./SeatGroup";
 import TermsAndConditions from "./TermsAndConditions";
 
 export async function Booking({ stadium }) {
+  console.log("stadium", stadium);
   const groupedTickets = stadium
     ? await getTicketsGroupedByPrice(stadium.id)
     : null;  

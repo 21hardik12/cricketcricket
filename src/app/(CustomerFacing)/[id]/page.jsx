@@ -3,9 +3,8 @@ import EventCarousel from "../_components/EventCarousel";
 import { Event, Stadium } from "@prisma/client";
 import { EventDetailCard } from "../_components/EventDetailCard";
 import { Booking } from "../_components/Booking";
-export default async function BookEvent({
-  params: { id },
-}) {
+export default async function BookEvent({ id }) {
+  console.log("id", id);
   const event = await getSingleEvent(id);
   if (!event) {
     return null;

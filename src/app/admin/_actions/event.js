@@ -4,6 +4,11 @@ import db from "@/db/db";
 import { z } from "zod";
 import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
+import crypto from "crypto";
+
+const randomUUID = () => {
+  return crypto.randomBytes(12).toString("hex");
+}
 
 const fileSchema = z.instanceof(File, {
   message: 'required'
@@ -15,8 +20,8 @@ const addSchema = z.object({
   description: z.string().min(1),
   images: z.array(imageSchema.refine(file => file.size > 0, "Required")),
   date: z.date(),
-  category: z.string().uuid(),
-  stadium: z.string().uuid(),
+  category: z.string(),
+  stadium: z.string(),
 });
 
 export async function addEvent(prevState, formData) {  
@@ -24,23 +29,26 @@ export async function addEvent(prevState, formData) {
   
   const formObject = Object.fromEntries(formData.entries());  
   formObject.images = files;
-  console.log(formObject.date, " former date")
+  console.log(formObject.category, ": category")
 
-  formObject.date = new Date(formObject.date);
-  console.log(formObject.date, "new date")
+  formObject.date = new Date(formObject.date);  
+
   const result = addSchema.safeParse(formObject);
   if (result.success === false) {
     return result.error.formErrors.fieldErrors;
   }
 
   const data = result.data;
+  console.log(data);
   
   await fs.mkdir('public/eventImages', { recursive: true });
   const imagePaths = data.images.map(async (image) => {
-    const imagePath = `/eventImages/${crypto.randomUUID()}-${image.name}`;
+    const imagePath = `/eventImages/${randomUUID()}-${image.name}`;
     await fs.writeFile(`public${imagePath}`, Buffer.from(await image.arrayBuffer()));
     return imagePath;
   }); 
+
+  console.log(data);
   const startingPrice = await db.stadium.findUnique({
     where: {
       id: data.stadium,
@@ -57,9 +65,12 @@ export async function addEvent(prevState, formData) {
       }
     }
   })
+  console.log(startingPrice);
   try {
+    console.log(data);
     const createdEvent = await db.event.create({
       data: {
+        id: randomUUID(),
         title: data.title,
         description: data.description,
         categoryId: data.category,
@@ -140,7 +151,7 @@ export async function editEvent(id, prevState, formData) {
 
       const imagePaths = await Promise.all(
         validImages.map(async (image) => {
-          const imagePath = `/eventImages/${crypto.randomUUID()}-${image.name}`;
+          const imagePath = `/eventImages/${randomUUID()}-${image.name}`;
           await fs.writeFile(`public${imagePath}`, Buffer.from(await image.arrayBuffer()));
           return imagePath;
         })

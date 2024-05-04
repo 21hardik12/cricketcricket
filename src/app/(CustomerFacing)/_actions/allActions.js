@@ -2,7 +2,6 @@
 
 import db from "@/db/db";
 import fs from "fs/promises";
-import { number } from "zod";
 
 export const getTicket = async (id) => {
   const ticket = await db.ticket.findUnique({
@@ -31,6 +30,7 @@ export const getEventWithoutImages = async (id) => {
 }
 
 export const getSingleEvent = async (id) => {
+  console.log("id from getsingleevent: ", id)
   const event = await db.event.findUnique({
     where: {
       id,
@@ -44,6 +44,7 @@ export const getSingleEvent = async (id) => {
 };
 
 export const getTicketsGroupedByPrice = async (stadiumId) => {
+  console.log("stadiumId", stadiumId);
   const groupedtickets = await db.ticket.groupBy({
     by: ["price"],
     where: {
