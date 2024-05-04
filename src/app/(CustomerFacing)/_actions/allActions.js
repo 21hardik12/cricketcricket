@@ -2,6 +2,7 @@
 
 import db from "@/db/db";
 import fs from "fs/promises";
+import { ObjectId } from "mongodb";
 
 export const getTicket = async (id) => {
   const ticket = await db.ticket.findUnique({
@@ -30,7 +31,6 @@ export const getEventWithoutImages = async (id) => {
 }
 
 export const getSingleEvent = async (id) => {
-  console.log("id from getsingleevent: ", id)
   const event = await db.event.findUnique({
     where: {
       id,
