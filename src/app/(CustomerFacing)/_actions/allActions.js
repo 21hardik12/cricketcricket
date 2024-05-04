@@ -57,7 +57,6 @@ export const getTicketsGroupedByPrice = async (stadiumId) => {
     throw new Error("Stadium ID is required");
  }
 
- console.log("stadiumId", stadiumId);
  const groupedtickets = await db.ticket.groupBy({
     by: ["price"],
     where: {

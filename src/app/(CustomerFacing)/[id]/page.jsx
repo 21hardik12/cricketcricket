@@ -3,7 +3,6 @@ import EventCarousel from "../_components/EventCarousel";
 import { EventDetailCard } from "../_components/EventDetailCard";
 import { Booking } from "../_components/Booking";
 export default async function BookEvent({ params: { id } }) {
-  console.log("id", id);
   const event = await getSingleEvent(id);
   if (!event) {
     return null;

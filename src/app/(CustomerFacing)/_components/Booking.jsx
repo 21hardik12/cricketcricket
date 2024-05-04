@@ -10,7 +10,6 @@ import SeatGroup from "./SeatGroup";
 import TermsAndConditions from "./TermsAndConditions";
 
 export async function Booking({ stadium }) {
-  console.log("stadium", stadium);
   const groupedTickets = stadium
     ? await getTicketsGroupedByPrice(stadium.id)
     : null;  

@@ -29,7 +29,6 @@ export async function addEvent(prevState, formData) {
   
   const formObject = Object.fromEntries(formData.entries());  
   formObject.images = files;
-  console.log(formObject.category, ": category")
 
   formObject.date = new Date(formObject.date);  
 
@@ -39,7 +38,6 @@ export async function addEvent(prevState, formData) {
   }
 
   const data = result.data;
-  console.log(data);
   
   await fs.mkdir('public/eventImages', { recursive: true });
   const imagePaths = data.images.map(async (image) => {
@@ -48,7 +46,6 @@ export async function addEvent(prevState, formData) {
     return imagePath;
   }); 
 
-  console.log(data);
   const startingPrice = await db.stadium.findUnique({
     where: {
       id: data.stadium,
@@ -65,9 +62,7 @@ export async function addEvent(prevState, formData) {
       }
     }
   })
-  console.log(startingPrice);
   try {
-    console.log(data);
     const createdEvent = await db.event.create({
       data: {
         id: randomUUID(),
@@ -83,7 +78,6 @@ export async function addEvent(prevState, formData) {
         date: data.date, // Add the missing 'date' property with a default value
       }      
     })
-    console.log(createdEvent);
   } catch (error) {
     console.log(error)
   }
@@ -171,7 +165,6 @@ export async function editEvent(id, prevState, formData) {
       data: updatedEventData,
     });
 
-    console.log(updatedEvent);
   } catch (error) {
     console.log(error);
   }
