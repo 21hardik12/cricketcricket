@@ -32,6 +32,20 @@ export default function SeatGroup({
     [searchParams]
   )
 
+  const createQueryStringWithTicketAndTotalAmount = useCallback(
+    (ticketId, totalAmount) => {
+       // Create a new URLSearchParams object from the current searchParams
+       const params = new URLSearchParams(searchParams.toString());
+   
+       // Set the new parameters
+       params.set("ticket", ticketId);
+       params.set("totalAmount", totalAmount);
+   
+       // Convert the updated params back to a string
+       return params.toString();
+    },
+    [searchParams]
+   );
 
   const handleToggle = (price) => {
     setOpenGroup(openGroup === price ? null : price);
@@ -43,7 +57,10 @@ export default function SeatGroup({
 
   const numberOfSeats = searchParams.get("seats") || 1;
   const totalAmount = (selectedTicket?.price || 0) * Number(numberOfSeats);
-  console.log(totalAmount);
+  // const queryStringWithTotalAmount = createQueryString("totalAmount", totalAmount);
+  // console.log(queryStringWithTotalAmount)
+  const queryStringWithTicketAndTotalAmount = createQueryStringWithTicketAndTotalAmount(selectedTicket?.id ?? '', totalAmount);
+  console.log(queryStringWithTicketAndTotalAmount)
   return (
     <>
       <p className="font-bold text-lg">Available Seats</p>
@@ -78,7 +95,7 @@ export default function SeatGroup({
           {formatCurrency(totalAmount)}
         </p>        
       </div>
-      <Link href={`${pathName}/booking?${createQueryString("ticket", selectedTicket?.id ?? '')}`}><button className="flex justify-center w-full py-4 h-auto bg-red-500 rounded-sm text-white text-lg">Book Tickets</button></Link>
+      <Link href={`${pathName}/booking?${queryStringWithTicketAndTotalAmount}`}><button className="flex justify-center w-full py-4 h-auto bg-red-500 rounded-sm text-white text-lg">Book Tickets</button></Link>
     </>
   );
 }
