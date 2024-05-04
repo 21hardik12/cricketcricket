@@ -22,15 +22,15 @@ export default function SeatGroup({
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const createQueryString = useCallback(
-    (name, value) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
+  // const createQueryString = useCallback(
+  //   (name, value) => {
+  //     const params = new URLSearchParams(searchParams.toString())
+  //     params.set(name, value)
  
-      return params.toString()
-    },
-    [searchParams]
-  )
+  //     return params.toString()
+  //   },
+  //   [searchParams]
+  // )
 
   const createQueryStringWithTicketAndTotalAmount = useCallback(
     (ticketId, totalAmount) => {
@@ -56,11 +56,9 @@ export default function SeatGroup({
   };
 
   const numberOfSeats = searchParams.get("seats") || 1;
-  const totalAmount = (selectedTicket?.price || 0) * Number(numberOfSeats);
-  // const queryStringWithTotalAmount = createQueryString("totalAmount", totalAmount);
-  // console.log(queryStringWithTotalAmount)
+  const totalAmount = (selectedTicket?.price || 0) * Number(numberOfSeats);  
   const queryStringWithTicketAndTotalAmount = createQueryStringWithTicketAndTotalAmount(selectedTicket?.id ?? '', totalAmount);
-  console.log(queryStringWithTicketAndTotalAmount)
+  
   return (
     <>
       <p className="font-bold text-lg">Available Seats</p>

@@ -18,10 +18,7 @@ import Image from "next/image";
 import { Table, TableRow } from "@/components/ui/table";
 import { getEventWithoutImages, getTicket } from "../../_actions/allActions";
 
-export default function BookTickets({
-  params,
-  searchParams,
-}) {
+export default function BookTickets({ params, searchParams }) {
   const ticket = searchParams["ticket"];
   const seats = searchParams["seats"];
 
@@ -42,20 +39,20 @@ export default function BookTickets({
   );
 }
 
-async function BillingDetails({
-  seats,
-  ticketId,
-  eventId,
-}) {
+async function BillingDetails({ seats, ticketId, eventId }) {
   const ticket = await getTicket(ticketId);
   const event = await getEventWithoutImages(eventId);
   return (
     <div>
       <div className="flex gap-5 bg-gray-100 rounded-sm p-3">
         <div className="flex flex-col items-start">
-          <p className="text-xl font-light mb-3 tracking-wider">ORDER SUMMARY</p>
+          <p className="text-xl font-light mb-3 tracking-wider">
+            ORDER SUMMARY
+          </p>
           <p className="text-black font-bold text-base mb-1">{event?.title}</p>
-          <p className="text-black font-light text-sm mb-2">{event?.stadium.location}</p>
+          <p className="text-black font-light text-sm mb-2">
+            {event?.stadium.location}
+          </p>
           <p className="text-black font-normal text-sm mb-3">{ticket?.name}</p>
           <p>{event?.date.toDateString()}</p>
         </div>
@@ -104,44 +101,34 @@ function PaymentOption() {
           <CardFailure></CardFailure>
           <PaymentOptionDialog paymentOption="Net Banking">
             <div className="flex flex-col items-center gap-2">
-              <Table>
-                <TableRow>
-                  <div className="flex justify-between p-1">
-                    <p className="font-bold">Name</p>
-                    <div className="flex">
-                      <p>Book My Show</p>
-                      <FaRegCopy className="font-bold text-lg ml-1" />
-                    </div>
-                  </div>
-                </TableRow>
-                <TableRow>
-                  <div className="flex justify-between p-1">
-                    <p className="font-bold">IFSC</p>
-                    <div className="flex">
-                      <p>AUB2132132</p>
-                      <FaRegCopy className="font-bold text-lg ml-1" />
-                    </div>
-                  </div>
-                </TableRow>
-                <TableRow>
-                  <div className="flex justify-between p-1">
-                    <p className="font-bold">Account Number</p>
-                    <div className="flex">
-                      <p>213213123123213</p>
-                      <FaRegCopy className="font-bold text-lg ml-1" />
-                    </div>
-                  </div>
-                </TableRow>
-                <TableRow>
-                  <div className="flex justify-between p-1">
-                    <p className="font-bold">Bank Name</p>
-                    <div className="flex">
-                      <p>AU Small Finance Bank</p>
-                      <FaRegCopy className="font-bold text-lg ml-1" />
-                    </div>
-                  </div>
-                </TableRow>
-              </Table>
+              <div className="flex w-full border-t border-solid border-gray-400 justify-between p-1">
+                <p className="font-bold">Name</p>
+                <div className="flex">
+                  <p>Book My Show</p>
+                  <FaRegCopy className="font-bold text-lg ml-1" />
+                </div>
+              </div>
+              <div className="flex w-full border-t border-solid border-gray-400 justify-between p-1">
+                <p className="font-bold">IFSC</p>
+                <div className="flex">
+                  <p>AUB2132132</p>
+                  <FaRegCopy className="font-bold text-lg ml-1" />
+                </div>
+              </div>
+              <div className="flex w-full border-t border-solid border-gray-400 justify-between p-1">
+                <p className="font-bold">Account Number</p>
+                <div className="flex">
+                  <p>213213123123213</p>
+                  <FaRegCopy className="font-bold text-lg ml-1" />
+                </div>
+              </div>
+              <div className="flex w-full border-y border-solid border-gray-400 justify-between p-1">
+                <p className="font-bold">Bank Name</p>
+                <div className="flex">
+                  <p>AU Small Finance Bank</p>
+                  <FaRegCopy className="font-bold text-lg ml-1" />
+                </div>
+              </div>              
               <AmountPayable></AmountPayable>
               <TransactionNumberForm></TransactionNumberForm>
             </div>
@@ -235,10 +222,7 @@ function CardFailure() {
   );
 }
 
-function PaymentOptionDialog({
-  paymentOption,
-  children,
-}) {
+function PaymentOptionDialog({ paymentOption, children }) {
   return (
     <Dialog>
       <DialogTrigger className="w-full">
