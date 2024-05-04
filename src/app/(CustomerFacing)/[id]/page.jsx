@@ -1,6 +1,5 @@
 import { getSingleEvent, getSingleStadium } from "../_actions/allActions";
 import EventCarousel from "../_components/EventCarousel";
-import { Event, Stadium } from "@prisma/client";
 import { EventDetailCard } from "../_components/EventDetailCard";
 import { Booking } from "../_components/Booking";
 export default async function BookEvent({ id }) {
